@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "dist",
+    "sourceMap": false,
+    "target": "es5",
+    "module": "esnext",
+    "allowJs": false,
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true,
+    "removeComments": false,
+    "moduleResolution": "node",
+    "declaration": true,
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "esnext"
+    ]
+  },
+  "include": [
+    "src"
+  ]
+}

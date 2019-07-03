@@ -1,0 +1,146 @@
+{
+  "name": "vue-suspense",
+  "version": "0.1.0",
+  "description": "Code splitting, data acquisition, just like React.suspense, just for vue.",
+  "keywords": [
+    "vue",
+    "suspense",
+    "suspend",
+    "async"
+  ],
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "repository": "https://github.com/HcySunYang/vue-suspense.git",
+  "author": "HcySunYang <HcySunYang@outlook.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "yarn lint && cross-env NODE_ENV=development rollup -c -w",
+    "build": "yarn build:prod && yarn build:dev",
+    "build:prod": "yarn lint && cross-env NODE_ENV=production rollup -c",
+    "build:dev": "yarn lint && cross-env NODE_ENV=development rollup -c",
+    "commit": "git-cz",
+    "test": "yarn lint && cross-env NODE_ENV=test jest --verbose",
+    "lint": "tslint --project tsconfig.json --fix",
+    "changelog": "conventional-changelog -i CHANGELOG.md -s",
+    "prepublishOnly": "yarn toc && yarn build"
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "vue": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "conventional-changelog-cli": "^2.0.21",
+    "cross-env": "^5.2.0",
+    "cz-emoji": "^1.1.2",
+    "husky": "^2.4.1",
+    "jest": "^24.8.0",
+    "lint-staged": "^8.2.1",
+    "prettier": "^1.18.2",
+    "prettier-tslint": "^0.4.2",
+    "rollup": "^1.16.2",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-terser": "^5.0.0",
+    "rollup-plugin-typescript2": "^0.21.2",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.18.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "typescript": "^3.5.2",
+    "vue": "^2.6.10",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "npm run lint",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-emoji"
+    },
+    "cz-emoji": {
+      "types": [
+        {
+          "emoji": "\t🌟",
+          "code": ":star2:",
+          "description": "\tA new feature",
+          "name": "feat"
+        },
+        {
+          "emoji": "\t🐞",
+          "code": ":beetle:",
+          "description": "\tA bug fix",
+          "name": "fix"
+        },
+        {
+          "emoji": "\t🎨",
+          "code": ":art:",
+          "description": "\tNeither fixes a bug nor adds a feature",
+          "name": "refactor"
+        },
+        {
+          "emoji": "\t🚓",
+          "code": ":police_car:",
+          "description": "\t Testing improved with new or fixed tests",
+          "name": "test"
+        },
+        {
+          "emoji": "\t🔩",
+          "code": ":nut_and_bolt:",
+          "description": "\tDoesn't modify src or test files",
+          "name": "chore"
+        },
+        {
+          "emoji": "\t💰",
+          "code": ":moneybag:",
+          "description": "\tImproves performance with this change",
+          "name": "perf"
+        },
+        {
+          "emoji": "\t🚥",
+          "code": ":traffic_light:",
+          "description": "\tCI config files and scripts",
+          "name": "ci"
+        },
+        {
+          "emoji": "\t♻️",
+          "code": ":recycle:",
+          "description": "\tOptimize workflow",
+          "name": "workflow"
+        },
+        {
+          "emoji": "\t🚀",
+          "code": ":rocket:",
+          "description": "\tBuild system config or external dependencies",
+          "name": "build"
+        },
+        {
+          "emoji": "\t📚",
+          "code": ":books:",
+          "description": "\tDocumentation change",
+          "name": "docs"
+        },
+        {
+          "emoji": "\t💊",
+          "code": ":pill:",
+          "description": "\tReverts a previous commit",
+          "name": "revert"
+        },
+        {
+          "emoji": "\t🎉",
+          "code": ":tada:",
+          "description": "\tInitialize a new package.",
+          "name": "init"
+        }
+      ]
+    }
+  }
+}
