@@ -1,6 +1,6 @@
 # vue-suspense (WIP)
 
-Code splitting, data fetching, just like React.suspense, but for vue.
+Code splitting, data fetching, just like React.Suspense, but for vue.
 
 ## TODO
 
