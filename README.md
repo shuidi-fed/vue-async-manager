@@ -4,11 +4,11 @@ Code splitting, data fetching, just like React.Suspense, but for vue.
 
 ## TODO
 
-- ✅ <Suspense> Component
+- ✅ `<Suspense>` Component
 - ✅ lazy Component creator
 - ✅ createResource
 - ✅ TypeScript
-- ✅ Allow nested <Suspense> Component
+- ✅ Allow nested `<Suspense>` Component
 - LRU cache
 - Delayed display loading
 - With vue-router
