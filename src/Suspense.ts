@@ -56,7 +56,7 @@ export const add = (af: SSFactory) => {
   const asyncFactorys =
     suspIns.asyncFactorys || (suspIns.asyncFactorys = new Set())
   console.log('suspIns_ID: ', suspIns._uid)
-  // suspIns.resolved = false
+  suspIns.resolved = false
   asyncFactorys.add(af)
 }
 export const has = (af: SSFactory) => {
@@ -99,14 +99,28 @@ export default {
     console.log(this._uid)
     console.log(this.resolved)
     console.log('Suspense render')
+    const isVisible =
+      ((this.$options as any).suspense as SSOptions).mode === 'visible'
     const emptyVNode = this._e()
     const fallback = this.$slots.fallback || [emptyVNode]
     // The `tree` is the real content to be rendered
     const tree = this.$slots.default || [emptyVNode]
 
     const rendered = this.resolved
-      ? createWrapper(h, tree)
-      : ((this.$options as any).suspense as SSOptions).mode === 'visible'
+      ? isVisible
+        ? createWrapper(h, tree)
+        : createWrapper(h, [
+            // We need to render the tree, but we should not show the rendered content.
+            h(
+              'div',
+              {
+                style: { display: 'block' },
+                class: { 'vue-suspense-hidden-wrapper': true }
+              },
+              tree
+            )
+          ])
+      : isVisible
       ? createWrapper(h, tree.concat(fallback))
       : createWrapper(h, [
           // We need to render the tree, but we should not show the rendered content.
