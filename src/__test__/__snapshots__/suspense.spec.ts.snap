@@ -2,23 +2,23 @@
 
 exports[`Mode: hidden Lazy component as a child of Suspense 1`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: none;\\"><!----><p>static</p></div><div class=\\"fallback\\">loading</div></div>"`;
 
-exports[`Mode: hidden Lazy component as a child of Suspense 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"test-component\\">test component</div><p>static</p></div>"`;
+exports[`Mode: hidden Lazy component as a child of Suspense 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: block;\\"><div class=\\"test-component\\">test component</div><p>static</p></div></div>"`;
 
 exports[`Mode: hidden Nested Suspense components 1`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: none;\\"><!----><div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: none;\\"><div class=\\"cache-component-3\\">{}</div></div><!----></div></div><div class=\\"loading\\">loading</div></div>"`;
 
-exports[`Mode: hidden Nested Suspense components 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"test-component\\">test component</div><div class=\\"vue-suspense-wrapper\\"><div class=\\"cache-component-3\\">{\\"code\\":0,\\"msg\\":\\"success\\",\\"data\\":{}}</div></div></div>"`;
+exports[`Mode: hidden Nested Suspense components 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: block;\\"><div class=\\"test-component\\">test component</div><div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: block;\\"><div class=\\"cache-component-3\\">{\\"code\\":0,\\"msg\\":\\"success\\",\\"data\\":{}}</div></div></div></div></div>"`;
 
 exports[`Mode: hidden Nothing to wait 1`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: none;\\"><p>static</p></div><div class=\\"fallback\\">loading</div></div>"`;
 
-exports[`Mode: hidden Nothing to wait 2`] = `"<div class=\\"vue-suspense-wrapper\\"><p>static</p></div>"`;
+exports[`Mode: hidden Nothing to wait 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: block;\\"><p>static</p></div></div>"`;
 
 exports[`Mode: hidden Use both \`lazy component\` and \`createResource\` in Suspense 1`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: none;\\"><!----><section><div class=\\"cache-component-2\\">{}</div></section></div><div class=\\"loading\\">loading</div></div>"`;
 
-exports[`Mode: hidden Use both \`lazy component\` and \`createResource\` in Suspense 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"test-component\\">test component</div><section><div class=\\"cache-component-2\\">{\\"code\\":0,\\"msg\\":\\"success\\",\\"data\\":{}}</div></section></div>"`;
+exports[`Mode: hidden Use both \`lazy component\` and \`createResource\` in Suspense 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: block;\\"><div class=\\"test-component\\">test component</div><section><div class=\\"cache-component-2\\">{\\"code\\":0,\\"msg\\":\\"success\\",\\"data\\":{}}</div></section></div></div>"`;
 
 exports[`Mode: hidden Use resource cache in subcomponents of Suspense 1`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: none;\\"><div class=\\"cache-component\\">{}</div></div><div class=\\"fallback\\"></div></div>"`;
 
-exports[`Mode: hidden Use resource cache in subcomponents of Suspense 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"cache-component\\">{\\"code\\":0,\\"msg\\":\\"success\\",\\"data\\":{}}</div></div>"`;
+exports[`Mode: hidden Use resource cache in subcomponents of Suspense 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: block;\\"><div class=\\"cache-component\\">{\\"code\\":0,\\"msg\\":\\"success\\",\\"data\\":{}}</div></div></div>"`;
 
 exports[`Mode: visible Lazy component as a child of Suspense 1`] = `"<div class=\\"vue-suspense-wrapper\\"><!----><p>static</p><div class=\\"fallback\\">loading</div></div>"`;
 
