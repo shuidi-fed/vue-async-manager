@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`No loading: Nested Suspense components 1`] = `"<div class=\\"vue-suspense-wrapper\\"><!----><div class=\\"vue-suspense-wrapper\\"><!----><!----></div><!----></div>"`;
+
+exports[`No loading: Nested Suspense components 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"test-component\\">test component</div><div class=\\"vue-suspense-wrapper\\"><div class=\\"cache-component-3\\">{\\"code\\":0,\\"msg\\":\\"success\\",\\"data\\":{}}</div></div></div>"`;

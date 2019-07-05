@@ -26,9 +26,12 @@ export default function lazy(asyncFactory: SSAsyncFactory): Component {
           C = C.default
         }
         asyncFactory.resolved = C
-        del(asyncFactory)
+        // Trigger update
         this.$forceUpdate()
       })
+    },
+    updated() {
+      del(asyncFactory)
     },
     render(this: SSVue, h) {
       console.log('SSLazy render')

@@ -28,6 +28,8 @@ export interface SSVue extends Vue {
   _e(): VNode
   _uid: number
   promiser: Promise<any>
+  displayLoading: boolean
+  readonly delay: number
 }
 export type SSFactory = SSAsyncFactory | SSFetchFactory
 
@@ -74,25 +76,48 @@ export default {
   name: COMPONENT_NAME,
   data() {
     return {
-      resolved: false
+      resolved: false,
+      displayLoading: false
+    }
+  },
+  props: {
+    delay: {
+      type: Number,
+      default: 0
     }
   },
   created() {
+    pushSuspenseInstance(this)
+    // `this.promiser` is for test cases
     this.promiser = new Promise(resolve => {
-      pushSuspenseInstance(this)
       this.$on(RESOLVED, () => {
+        if (this._timer) clearTimeout(this._timer)
         this.resolved = true
         resolve()
       })
     })
+
+    // Setting loading status
+    if (this.delay > 0) {
+      this._timer = setTimeout(() => {
+        this.displayLoading = true
+      }, this.delay)
+    } else {
+      this.displayLoading = true
+    }
   },
   mounted() {
-    popSuspenseInstance()
-  },
-  beforeUpdate() {
-    pushSuspenseInstance(this)
+    if (!this.asyncFactorys) {
+      // This means that there are no lazy components or resource.read()
+      // in the child components of the Suspense component,
+      // set to resolved to update rendering.
+      // Warning: If the content wrapped by the Suspense component is static, the static content will be rendered twice.
+      this.$emit(RESOLVED)
+    }
   },
   updated() {
+    if (this.poped) return
+    this.poped = true
     popSuspenseInstance()
   },
   render(this: SSVue, h: CreateElement) {
@@ -102,7 +127,9 @@ export default {
     const isVisible =
       ((this.$options as any).suspense as SSOptions).mode === 'visible'
     const emptyVNode = this._e()
-    const fallback = this.$slots.fallback || [emptyVNode]
+    const fallback = this.displayLoading
+      ? this.$slots.fallback || [emptyVNode]
+      : [emptyVNode]
     // The `tree` is the real content to be rendered
     const tree = this.$slots.default || [emptyVNode]
 
