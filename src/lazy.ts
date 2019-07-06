@@ -35,7 +35,9 @@ export default function lazy(asyncFactory: SSAsyncFactory): Component {
     },
     render(this: SSVue, h) {
       console.log('SSLazy render')
-      return asyncFactory.resolved ? h(asyncFactory.resolved) : this._e()
+      return asyncFactory.resolved
+        ? h(asyncFactory.resolved as Component)
+        : this._e()
     }
   }
 }

@@ -8,34 +8,28 @@ import { SSOptions } from './index'
 
 export type SSComponent = Component & { __esModule?: any; default?: Component }
 
-export interface SSAsyncFactory {
-  (): Promise<SSComponent>
-  suspenseInstance?: SSVue
-  resolved?: Component
-  $$waiter?: Promise<SSComponent>
-}
-
-export interface SSFetchFactory {
-  (...args: any[]): Promise<any>
-  suspenseInstance?: SSVue
-  resolved?: boolean
+export interface SSAsyncFactory<I = any, R = any> {
+  (input?: I): Promise<R>
+  suspenseInstance?: SSVue<R>
+  resolved?: Component | boolean
+  $$waiter?: Promise<R>
   res?: any
 }
 
-export interface SSVue extends Vue {
-  asyncFactorys: Set<SSFactory>
+export interface SSVue<R = any> extends Vue {
+  asyncFactorys: Set<SSAsyncFactory<any, SSComponent | R>>
   resolved: boolean
   _e(): VNode
   _uid: number
+  _render(createElement: typeof Vue.prototype.$createElement): VNode
   promiser: Promise<any>
   displayLoading: boolean
   readonly delay: number
   setupLoading(): void
 }
-export type SSFactory = SSAsyncFactory | SSFetchFactory
 
 export const RESOLVED = 'resolved'
-export const del = (af: SSFactory) => {
+export const del = (af: SSAsyncFactory) => {
   const suspIns = af.suspenseInstance
   if (!suspIns) {
     // TODO: warn
@@ -49,7 +43,7 @@ export const del = (af: SSFactory) => {
     suspIns.$emit(RESOLVED)
   }
 }
-export const add = (af: SSFactory) => {
+export const add = (af: SSAsyncFactory) => {
   const suspIns = currentSuspenseInstance || af.suspenseInstance
   if (!suspIns) {
     // TODO: warn
@@ -65,7 +59,7 @@ export const add = (af: SSFactory) => {
   }
   asyncFactorys.add(af)
 }
-export const has = (af: SSFactory) => {
+export const has = (af: SSAsyncFactory) => {
   const suspIns = currentSuspenseInstance || af.suspenseInstance
   if (!suspIns) {
     // TODO: warn

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { del, add, has, SSFetchFactory, SSVue } from './Suspense'
+import { del, add, has, SSAsyncFactory, SSVue } from './Suspense'
 import {
   currentInstance,
   currentSuspenseInstance,
@@ -23,11 +23,17 @@ function observable(data: any) {
   }).$data
 }
 
-export default function createResource(fetchFactory: SSFetchFactory) {
-  const $res = observable({ $$result: null })
+interface Result<R> {
+  $$result: R
+  $$waiter: Promise<R>
+}
+export default function createResource<I = any, R = any>(
+  fetchFactory: SSAsyncFactory<I, R>
+) {
+  const $res: Result<R> = observable({ $$result: null })
 
   return {
-    read(...args: any[]) {
+    read(input: I) {
       // Returns `$res` if the relationship has been established
       if (has(fetchFactory)) return $res
 
@@ -44,11 +50,11 @@ export default function createResource(fetchFactory: SSFetchFactory) {
       }
 
       // Start fetching asynchronous data
-      const promise = fetchFactory(...args)
+      const promise = fetchFactory(input)
       $res.$$waiter = promise
 
       // tweak render
-      const ins = currentInstance as any
+      const ins = currentInstance as SSVue
       const originalRender = ins._render
       ins._render = function() {
         console.log('Resource render')
