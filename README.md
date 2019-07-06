@@ -11,7 +11,7 @@ Code splitting, data fetching, just like React.Suspense, but for vue.
 - ✅ Allow nested `<Suspense>` Component
 - ✅ Delayed display loading
 - LRU cache
-- With vue-router
+- ✅ With vue-router
 - With vuex
 - With graphql(Apollo )
 - SSR

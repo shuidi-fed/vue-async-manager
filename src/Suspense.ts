@@ -129,6 +129,12 @@ export default {
     }
   },
   updated() {
+    /**
+     * If the asynchronous call has not been resolved,
+     * the reason for triggering the update is to do something else,
+     * such as: display loading, etc., so popSuspenseInstance() should not be called.
+     */
+    if (!this.resolved) return
     popSuspenseInstance()
   },
   render(this: SSVue, h: CreateElement) {
