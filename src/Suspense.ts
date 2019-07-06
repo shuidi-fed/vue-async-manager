@@ -30,6 +30,7 @@ export interface SSVue extends Vue {
   promiser: Promise<any>
   displayLoading: boolean
   readonly delay: number
+  setupLoading(): void
 }
 export type SSFactory = SSAsyncFactory | SSFetchFactory
 
@@ -49,7 +50,7 @@ export const del = (af: SSFactory) => {
   }
 }
 export const add = (af: SSFactory) => {
-  const suspIns = currentSuspenseInstance
+  const suspIns = currentSuspenseInstance || af.suspenseInstance
   if (!suspIns) {
     // TODO: warn
     console.error('No Suspense instance')
@@ -58,11 +59,14 @@ export const add = (af: SSFactory) => {
   const asyncFactorys =
     suspIns.asyncFactorys || (suspIns.asyncFactorys = new Set())
   console.log('suspIns_ID: ', suspIns._uid)
-  suspIns.resolved = false
+  if (suspIns.resolved) {
+    suspIns.resolved = false
+    suspIns.setupLoading()
+  }
   asyncFactorys.add(af)
 }
 export const has = (af: SSFactory) => {
-  const suspIns = currentSuspenseInstance
+  const suspIns = currentSuspenseInstance || af.suspenseInstance
   if (!suspIns) {
     // TODO: warn
     console.error('No Suspense instance')
@@ -86,25 +90,34 @@ export default {
       default: 0
     }
   },
+  methods: {
+    setupLoading() {
+      // Setting loading status
+      if (this.delay > 0) {
+        this._timer = setTimeout(() => {
+          this.displayLoading = true
+        }, this.delay)
+      } else {
+        this.displayLoading = true
+      }
+    }
+  },
   created() {
     pushSuspenseInstance(this)
     // `this.promiser` is for test cases
     this.promiser = new Promise(resolve => {
       this.$on(RESOLVED, () => {
-        if (this._timer) clearTimeout(this._timer)
+        if (this._timer) {
+          clearTimeout(this._timer)
+          this._timer = null
+        }
         this.resolved = true
+        this.displayLoading = false
         resolve()
       })
     })
 
-    // Setting loading status
-    if (this.delay > 0) {
-      this._timer = setTimeout(() => {
-        this.displayLoading = true
-      }, this.delay)
-    } else {
-      this.displayLoading = true
-    }
+    this.setupLoading()
   },
   mounted() {
     if (!this.asyncFactorys) {
@@ -116,8 +129,6 @@ export default {
     }
   },
   updated() {
-    if (this.poped) return
-    this.poped = true
     popSuspenseInstance()
   },
   render(this: SSVue, h: CreateElement) {

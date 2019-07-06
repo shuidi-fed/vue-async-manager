@@ -33,7 +33,8 @@ export default function createResource(fetchFactory: SSFetchFactory) {
 
       // Establish a relationship between the fetchFactory and the current component instance
       add(fetchFactory)
-      fetchFactory.suspenseInstance = currentSuspenseInstance as SSVue
+      fetchFactory.suspenseInstance =
+        (currentSuspenseInstance as SSVue) || fetchFactory.suspenseInstance
 
       if (fetchFactory.resolved) {
         fetchFactory.res.$$waiter.then(() => {
