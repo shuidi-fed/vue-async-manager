@@ -9,8 +9,8 @@ Code splitting, data fetching, just like React.Suspense, but for vue.
 - ✅ createResource
 - ✅ TypeScript
 - ✅ Allow nested `<Suspense>` Component
+- ✅ Delayed display loading
 - LRU cache
-- Delayed display loading
 - With vue-router
 - With vuex
 - With graphql(Apollo )
