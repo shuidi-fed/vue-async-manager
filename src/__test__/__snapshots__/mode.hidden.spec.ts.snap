@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Mode(hidden): Lazy component - the high-order components: fall back to this.$attrs 1`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: none;\\"><!----><p>static</p></div><div class=\\"fallback\\">loading</div></div>"`;
+
+exports[`Mode(hidden): Lazy component - the high-order components: fall back to this.$attrs 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: block;\\"><div class=\\"test-hoc-component\\" title=\\"I am a title\\">I am a title<div>I am a slot</div></div><p>static</p></div></div>"`;
+
+exports[`Mode(hidden): Lazy component - the high-order components: have props definition 1`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: none;\\"><!----><p>static</p></div><div class=\\"fallback\\">loading</div></div>"`;
+
+exports[`Mode(hidden): Lazy component - the high-order components: have props definition 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: block;\\"><div class=\\"test-hoc-component\\">I am a title<div>I am a slot</div></div><p>static</p></div></div>"`;
+
 exports[`Mode(hidden): Lazy component as a child of Suspense 1`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: none;\\"><!----><p>static</p></div><div class=\\"fallback\\">loading</div></div>"`;
 
 exports[`Mode(hidden): Lazy component as a child of Suspense 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"vue-suspense-hidden-wrapper\\" style=\\"display: block;\\"><div class=\\"test-component\\">test component</div><p>static</p></div></div>"`;

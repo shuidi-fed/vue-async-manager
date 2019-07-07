@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { del, add, has, SSAsyncFactory, SSVue } from './Suspense'
+import { del, add, SSAsyncFactory, SSVue } from './Suspense'
 import {
   currentInstance,
   currentSuspenseInstance,
@@ -24,7 +24,7 @@ function observable(data: any) {
 }
 
 interface Result<R> {
-  $$result: R
+  $$result: R | null
   $$waiter: Promise<R>
 }
 export default function createResource<I = any, R = any>(
@@ -34,23 +34,18 @@ export default function createResource<I = any, R = any>(
 
   return {
     read(input: I) {
-      // Returns `$res` if the relationship has been established
-      if (has(fetchFactory)) return $res
-
-      // Establish a relationship between the fetchFactory and the current component instance
-      add(fetchFactory)
-      fetchFactory.suspenseInstance =
-        (currentSuspenseInstance as SSVue) || fetchFactory.suspenseInstance
-
-      if (fetchFactory.resolved) {
-        fetchFactory.res.$$waiter.then(() => {
-          del(fetchFactory)
-        })
-        return fetchFactory.res
+      // Because we don't need caching, this is just a unique identifier,
+      // and each call to .read() is a completely new request.
+      const uniqueWrapFactory: SSAsyncFactory<I, R> = (i: I): Promise<R> => {
+        return fetchFactory(i)
       }
 
+      // Establish a relationship between the fetchFactory and the current component instance
+      add(uniqueWrapFactory)
+      uniqueWrapFactory.suspenseInstance = currentSuspenseInstance as SSVue
+
       // Start fetching asynchronous data
-      const promise = fetchFactory(input)
+      const promise = uniqueWrapFactory(input)
       $res.$$waiter = promise
 
       // tweak render
@@ -60,15 +55,15 @@ export default function createResource<I = any, R = any>(
         console.log('Resource render')
         // Trigger get to collect dependencies
         $res.$$result
-        return fetchFactory.resolved ? originalRender.call(ins) : ins._e()
+        return uniqueWrapFactory.resolved ? originalRender.call(ins) : ins._e()
       }
 
       promise.then(res => {
-        fetchFactory.resolved = true
-        fetchFactory.res = $res
+        uniqueWrapFactory.resolved = true
+        uniqueWrapFactory.res = $res
         // Trigger update
         $res.$$result = res
-        del(fetchFactory)
+        del(uniqueWrapFactory)
       })
 
       return $res
