@@ -2,27 +2,18 @@ import { CreateElement } from 'vue'
 import createResource from '../../createResource'
 import fetch from './fetch'
 
-const resource = createResource(() => fetch())
-
 export default {
   name: 'CacheComponent',
-  data() {
-    return {
-      res: {}
-    }
-  },
   async created() {
-    const res = resource.read()
+    this.resource = createResource(() => fetch())
     // This.promiser is used in test cases, waiting for resource requests to complete
-    this.promiser = res.$$waiter
-    await res.$$waiter
-    this.res = res.$$result
+    this.promiser = this.resource.read()
   },
   render(h: CreateElement) {
     return h(
       'div',
       { class: { 'cache-component': true } },
-      JSON.stringify(this.res)
+      JSON.stringify(this.resource.$res.$$result)
     )
   }
 }

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { del, add, SSAsyncFactory, SSVue } from './Suspense'
+import { del, add, SSAsyncFactory, SSVue, COMPONENT_NAME } from './Suspense'
 import {
   currentInstance,
   currentSuspenseInstance,
@@ -25,48 +25,66 @@ function observable(data: any) {
 
 interface Result<R> {
   $$result: R | null
-  $$waiter: Promise<R>
+}
+interface Resource<I, R> {
+  read(input: I): Promise<R>
+  $res: Result<R>
 }
 export default function createResource<I = any, R = any>(
   fetchFactory: SSAsyncFactory<I, R>
 ) {
   const $res: Result<R> = observable({ $$result: null })
 
-  return {
+  // tweak render
+  const ins = currentInstance as SSVue
+  const originalRender = ins._render
+  ins._render = function() {
+    console.log('Resource render')
+    // Trigger get to collect dependencies
+    $res.$$result
+    return fetchFactory.resolved ? originalRender.call(ins) : ins._e()
+  }
+
+  if (currentSuspenseInstance) {
+    fetchFactory.suspenseInstance = currentSuspenseInstance
+  } else {
+    let current = ins.$parent
+    while (current) {
+      if (current.$options.name === COMPONENT_NAME) {
+        fetchFactory.suspenseInstance = current as SSVue
+        break
+      } else {
+        current = current.$parent
+      }
+    }
+  }
+
+  const resource: Resource<I, R> = {
     read(input: I) {
       // Because we don't need caching, this is just a unique identifier,
       // and each call to .read() is a completely new request.
-      const uniqueWrapFactory: SSAsyncFactory<I, R> = (i: I): Promise<R> => {
+      const uniqueWrapFactory = (i: I) => {
         return fetchFactory(i)
       }
 
       // Establish a relationship between the fetchFactory and the current component instance
+      uniqueWrapFactory.suspenseInstance = fetchFactory.suspenseInstance
       add(uniqueWrapFactory)
-      uniqueWrapFactory.suspenseInstance = currentSuspenseInstance as SSVue
 
       // Start fetching asynchronous data
       const promise = uniqueWrapFactory(input)
-      $res.$$waiter = promise
-
-      // tweak render
-      const ins = currentInstance as SSVue
-      const originalRender = ins._render
-      ins._render = function() {
-        console.log('Resource render')
-        // Trigger get to collect dependencies
-        $res.$$result
-        return uniqueWrapFactory.resolved ? originalRender.call(ins) : ins._e()
-      }
 
       promise.then(res => {
-        uniqueWrapFactory.resolved = true
-        uniqueWrapFactory.res = $res
+        fetchFactory.resolved = true
         // Trigger update
         $res.$$result = res
         del(uniqueWrapFactory)
       })
 
-      return $res
-    }
+      return promise
+    },
+    $res
   }
+
+  return resource
 }
