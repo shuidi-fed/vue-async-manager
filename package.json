@@ -22,7 +22,9 @@
     "test": "yarn lint && cross-env NODE_ENV=test jest --verbose",
     "lint": "tslint --project tsconfig.json --fix",
     "changelog": "conventional-changelog -i CHANGELOG.md -s",
-    "prepublishOnly": "yarn toc && yarn build"
+    "prepublishOnly": "yarn toc && yarn build",
+    "docs:dev": "vuepress dev ./docs",
+    "docs:build": "vuepress build ./docs"
   },
   "files": [
     "dist"
@@ -49,7 +51,8 @@
     "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.5.2",
     "vue": "^2.6.10",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "vuepress": "^1.0.2"
   },
   "lint-staged": {
     "*.ts": [
