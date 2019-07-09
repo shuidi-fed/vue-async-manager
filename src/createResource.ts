@@ -57,6 +57,8 @@ export default function createResource<I = any, R = any>(
     }
   }
 
+  const hasSuspenseInstance = !!fetchFactory.suspenseInstance
+
   const resourceManager: ResourceManager<I, R> = {
     read(input: I) {
       if ($res.$$loading && options && options.prevent) {
@@ -69,9 +71,11 @@ export default function createResource<I = any, R = any>(
         return fetchFactory(i)
       }
 
-      // Establish a relationship between the fetchFactory and the current component instance
-      uniqueWrapFactory.suspenseInstance = fetchFactory.suspenseInstance
-      add(uniqueWrapFactory)
+      if (hasSuspenseInstance) {
+        // Establish a relationship between the fetchFactory and the current component instance
+        uniqueWrapFactory.suspenseInstance = fetchFactory.suspenseInstance
+        add(uniqueWrapFactory)
+      }
 
       // Start fetching asynchronous data
       const promise = uniqueWrapFactory(input)
@@ -81,7 +85,7 @@ export default function createResource<I = any, R = any>(
         // Trigger update
         $res.$$result = res
         $res.$$loading = false
-        del(uniqueWrapFactory)
+        if (hasSuspenseInstance) del(uniqueWrapFactory)
       })
 
       return promise

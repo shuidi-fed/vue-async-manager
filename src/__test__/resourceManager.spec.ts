@@ -59,4 +59,30 @@ describe('Resource Manager:', () => {
     expect(rmIns.$rm.$loading).toBe(false)
     expect(rmIns.$rm2.$loading).toBe(false)
   })
+
+  test('Resource manager - no Suspense component instance', async () => {
+    const ins = new Vue({
+      components: { ResourceManager },
+      render(h) {
+        return h('ResourceManager')
+      }
+    })
+
+    ins.$mount()
+
+    const rmIns = ins.$children[0] as any
+
+    expect(rmIns.$rm.$loading).toBe(true)
+    expect(rmIns.$rm2.$loading).toBe(true)
+
+    await rmIns.promiser1
+    await rmIns.promiser2
+    await rmIns.promiser3
+    await rmIns.promiser4
+
+    expect(rmIns.$rm.$result).toEqual({ name: 'foo' })
+    expect(rmIns.$rm2.$result).toEqual({ name: 'bar' })
+    expect(rmIns.$rm.$loading).toBe(false)
+    expect(rmIns.$rm2.$loading).toBe(false)
+  })
 })
