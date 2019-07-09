@@ -4,7 +4,7 @@ exports[`Mode(visible): Lazy component as a child of Suspense 1`] = `"<div class
 
 exports[`Mode(visible): Lazy component as a child of Suspense 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"test-component\\">test component</div><p>static</p></div>"`;
 
-exports[`Mode(visible): Nested Suspense components 1`] = `"<div class=\\"vue-suspense-wrapper\\"><!----><div class=\\"vue-suspense-wrapper\\"><!----><!----></div><div class=\\"loading\\">loading</div></div>"`;
+exports[`Mode(visible): Nested Suspense components 1`] = `"<div class=\\"vue-suspense-wrapper\\"><!----><div class=\\"vue-suspense-wrapper\\"><div class=\\"cache-component-3\\">null</div><!----></div><div class=\\"loading\\">loading</div></div>"`;
 
 exports[`Mode(visible): Nested Suspense components 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"test-component\\">test component</div><div class=\\"vue-suspense-wrapper\\"><div class=\\"cache-component-3\\">{\\"code\\":0,\\"msg\\":\\"success\\",\\"data\\":{}}</div></div></div>"`;
 
@@ -12,10 +12,10 @@ exports[`Mode(visible): Nothing to wait 1`] = `"<div class=\\"vue-suspense-wrapp
 
 exports[`Mode(visible): Nothing to wait 2`] = `"<div class=\\"vue-suspense-wrapper\\"><p>static</p></div>"`;
 
-exports[`Mode(visible): Use both \`lazy component\` and \`createResource\` in Suspense 1`] = `"<div class=\\"vue-suspense-wrapper\\"><!----><section><!----></section><div class=\\"loading\\">loading</div></div>"`;
+exports[`Mode(visible): Use both \`lazy component\` and \`createResource\` in Suspense 1`] = `"<div class=\\"vue-suspense-wrapper\\"><!----><section><div class=\\"cache-component-2\\">null</div></section><div class=\\"loading\\">loading</div></div>"`;
 
 exports[`Mode(visible): Use both \`lazy component\` and \`createResource\` in Suspense 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"test-component\\">test component</div><section><div class=\\"cache-component-2\\">{\\"code\\":0,\\"msg\\":\\"success\\",\\"data\\":{}}</div></section></div>"`;
 
-exports[`Mode(visible): Use resource cache in subcomponents of Suspense 1`] = `"<div class=\\"vue-suspense-wrapper\\"><!----><div class=\\"fallback\\"></div></div>"`;
+exports[`Mode(visible): Use resource cache in subcomponents of Suspense 1`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"cache-component\\">null</div><div class=\\"fallback\\"></div></div>"`;
 
 exports[`Mode(visible): Use resource cache in subcomponents of Suspense 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"cache-component\\">{\\"code\\":0,\\"msg\\":\\"success\\",\\"data\\":{}}</div></div>"`;

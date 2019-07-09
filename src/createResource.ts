@@ -24,27 +24,21 @@ function observable(data: any) {
 }
 
 interface Result<R> {
-  $$result: R | null
+  $$result: R
+  $$loading: boolean
 }
-interface Resource<I, R> {
+interface ResourceManager<I, R> {
   read(input: I): Promise<R>
-  $res: Result<R>
+  $result: R
+  $loading: boolean
+  fork(): ResourceManager<I, R>
 }
 export default function createResource<I = any, R = any>(
   fetchFactory: SSAsyncFactory<I, R>
 ) {
-  const $res: Result<R> = observable({ $$result: null })
+  const $res: Result<R> = observable({ $$result: null, $$loading: false })
 
-  // tweak render
   const ins = currentInstance as SSVue
-  const originalRender = ins._render
-  ins._render = function() {
-    console.log('Resource render')
-    // Trigger get to collect dependencies
-    $res.$$result
-    return fetchFactory.resolved ? originalRender.call(ins) : ins._e()
-  }
-
   if (currentSuspenseInstance) {
     fetchFactory.suspenseInstance = currentSuspenseInstance
   } else {
@@ -59,8 +53,9 @@ export default function createResource<I = any, R = any>(
     }
   }
 
-  const resource: Resource<I, R> = {
+  const resourceManager: ResourceManager<I, R> = {
     read(input: I) {
+      $res.$$loading = true
       // Because we don't need caching, this is just a unique identifier,
       // and each call to .read() is a completely new request.
       const uniqueWrapFactory = (i: I) => {
@@ -78,13 +73,25 @@ export default function createResource<I = any, R = any>(
         fetchFactory.resolved = true
         // Trigger update
         $res.$$result = res
+        $res.$$loading = false
         del(uniqueWrapFactory)
       })
 
       return promise
     },
-    $res
+    get $result() {
+      return $res.$$result
+    },
+    set $result(val) {
+      $res.$$result = val
+    },
+    get $loading() {
+      return $res.$$loading
+    },
+    fork() {
+      return createResource((i: I) => fetchFactory(i))
+    }
   }
 
-  return resource
+  return resourceManager
 }
