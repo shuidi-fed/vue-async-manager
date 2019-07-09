@@ -27,6 +27,7 @@ export interface SSVue<R = any> extends Vue {
   readonly delay: number
   setupLoading(): void
   _self: SSVue
+  [key: string]: any
 }
 
 export const RESOLVED = 'resolved'

@@ -6,6 +6,9 @@ import CacheComponent3 from './__fixtures__/CacheComponent3'
 import { dynamicImport } from './__fixtures__/fetch'
 import { SSVue } from '../Suspense'
 
+Vue.config.devtools = false
+Vue.config.productionTip = false
+
 describe('Loading:', () => {
   Vue.use(installer)
 

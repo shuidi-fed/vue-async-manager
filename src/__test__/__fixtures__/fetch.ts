@@ -1,13 +1,15 @@
 import { Component } from 'vue'
 
-export default () => {
+export default (mockData: any) => {
   return new Promise(resolve => {
     setTimeout(() => {
-      resolve({
-        code: 0,
-        msg: 'success',
-        data: {}
-      })
+      resolve(
+        mockData || {
+          code: 0,
+          msg: 'success',
+          data: {}
+        }
+      )
     }, 1000)
   })
 }
