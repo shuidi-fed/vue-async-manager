@@ -33,9 +33,13 @@ interface ResourceManager<I, R> {
   $loading: boolean
   fork(): ResourceManager<I, R>
 }
+interface ResourceOptions {
+  prevent?: boolean
+}
 export default function createResource<I = any, R = any>(
-  fetchFactory: SSAsyncFactory<I, R>
-) {
+  fetchFactory: SSAsyncFactory<I, R>,
+  options?: ResourceOptions
+): ResourceManager<I, R> {
   const $res: Result<R> = observable({ $$result: null, $$loading: false })
 
   const ins = currentInstance as SSVue
@@ -55,6 +59,9 @@ export default function createResource<I = any, R = any>(
 
   const resourceManager: ResourceManager<I, R> = {
     read(input: I) {
+      if ($res.$$loading && options && options.prevent) {
+        return Promise.resolve({} as R)
+      }
       $res.$$loading = true
       // Because we don't need caching, this is just a unique identifier,
       // and each call to .read() is a completely new request.
@@ -79,13 +86,13 @@ export default function createResource<I = any, R = any>(
 
       return promise
     },
-    get $result() {
+    get $result(): R {
       return $res.$$result
     },
-    set $result(val) {
+    set $result(val: R) {
       $res.$$result = val
     },
-    get $loading() {
+    get $loading(): boolean {
       return $res.$$loading
     },
     fork() {
