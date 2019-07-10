@@ -10,24 +10,10 @@ export type SSComponent = Component & { __esModule?: any; default?: Component }
 
 export interface SSAsyncFactory<I = any, R = any> {
   (input?: I): Promise<R>
-  suspenseInstance?: SSVue<R>
+  suspenseInstance?: Vue
   resolved?: Component | boolean
   $$waiter?: Promise<R>
   res?: any
-}
-
-export interface SSVue<R = any> extends Vue {
-  asyncFactorys: Set<SSAsyncFactory<any, SSComponent | R>>
-  resolved: boolean
-  _e(): VNode
-  _uid: number
-  _render(createElement: typeof Vue.prototype.$createElement): VNode
-  promiser: Promise<any>
-  displayLoading: boolean
-  readonly delay: number
-  setupLoading(): void
-  _self: SSVue
-  [key: string]: any
 }
 
 export const RESOLVED = 'resolved'
@@ -151,7 +137,7 @@ export default {
     if (!this.resolved) return
     popSuspenseInstance()
   },
-  render(this: SSVue, h: CreateElement) {
+  render(this: Vue, h: CreateElement) {
     const isVisible =
       ((this.$options as any).suspense as SSOptions).mode === 'visible'
     const emptyVNode = this._e()

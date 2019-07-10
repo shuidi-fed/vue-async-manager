@@ -1,5 +1,5 @@
-import { Component, VNode } from 'vue'
-import { del, add, has, SSAsyncFactory, SSVue, SSComponent } from './Suspense'
+import Vue, { Component, VNode } from 'vue'
+import { del, add, has, SSAsyncFactory, SSComponent } from './Suspense'
 import { currentSuspenseInstance } from './currentInstance'
 import { PropsDefinition, DefaultProps } from 'vue/types/options'
 
@@ -22,7 +22,7 @@ export default function lazy<PropsDef = PropsDefinition<DefaultProps>>(
         return
       }
       const promise = asyncFactory()
-      asyncFactory.suspenseInstance = currentSuspenseInstance as SSVue
+      asyncFactory.suspenseInstance = currentSuspenseInstance as Vue
       asyncFactory.$$waiter = promise
 
       promise
@@ -45,7 +45,7 @@ export default function lazy<PropsDef = PropsDefinition<DefaultProps>>(
     updated() {
       del(asyncFactory)
     },
-    render(this: SSVue, h) {
+    render(this: Vue, h) {
       // Fix context
       const slots = Object.keys(this.$slots)
         .reduce(
