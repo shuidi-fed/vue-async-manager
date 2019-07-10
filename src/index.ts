@@ -5,11 +5,7 @@ export interface SSOptions {
   mode: 'visible' | 'hidden'
 }
 
-export interface SSVueConstructor extends VueConstructor {
-  setSuspenseOptions(options: SSOptions): void
-}
-
-export default function install(Vue: SSVueConstructor, options: SSOptions) {
+export default function install(Vue: VueConstructor, options: SSOptions) {
   Vue.component('Suspense', Suspense)
 
   const opts = Object.assign<SSOptions, SSOptions>(

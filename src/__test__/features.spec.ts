@@ -3,7 +3,6 @@ import installer from '../index'
 import lazy from '../lazy'
 import TestComp from './__fixtures__/TestComponent'
 import { dynamicImport } from './__fixtures__/fetch'
-import { SSVue } from '../Suspense'
 
 Vue.config.devtools = false
 Vue.config.productionTip = false
@@ -35,7 +34,7 @@ describe('Lazy Error: ', () => {
     expect(ins.$el.outerHTML).toMatchSnapshot()
 
     try {
-      await (ins.$children[0] as SSVue).promiser
+      await (ins.$children[0] as Vue).promiser
     } catch (err) {
       expect(ins.$el.outerHTML).toMatchSnapshot()
     }
@@ -66,7 +65,7 @@ describe('Suspense event: ', () => {
 
     ins.$mount()
 
-    await (ins.$children[0] as SSVue).promiser
+    await (ins.$children[0] as Vue).promiser
 
     expect(onResolved.mock.calls.length).toBe(1)
     expect(onRejected.mock.calls.length).toBe(0)
@@ -98,7 +97,7 @@ describe('Suspense event: ', () => {
     ins.$mount()
 
     try {
-      await (ins.$children[0] as SSVue).promiser
+      await (ins.$children[0] as Vue).promiser
     } catch (err) {
       expect(onResolved.mock.calls.length).toBe(0)
       expect(onRejected.mock.calls.length).toBe(1)

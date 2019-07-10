@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import installer, { SSVueConstructor } from '../index'
+import Vue, { VueConstructor } from 'vue'
+import installer from '../index'
 import lazy from '../lazy'
 import TestComp from './__fixtures__/TestComponent'
 import TestHocComp from './__fixtures__/TestHOC'
@@ -7,7 +7,7 @@ import CacheComponent1 from './__fixtures__/CacheComponent'
 import CacheComponent2 from './__fixtures__/CacheComponent2'
 import CacheComponent3 from './__fixtures__/CacheComponent3'
 import { dynamicImport } from './__fixtures__/fetch'
-import Suspense, { SSVue } from '../Suspense'
+import Suspense from '../Suspense'
 
 Vue.config.devtools = false
 Vue.config.productionTip = false
@@ -16,7 +16,7 @@ describe('Mode(hidden):', () => {
   Vue.use(installer)
 
   beforeEach(() => {
-    ;(Vue as SSVueConstructor).setSuspenseOptions({ mode: 'hidden' })
+    ;(Vue as VueConstructor).setSuspenseOptions({ mode: 'hidden' })
   })
 
   test('Nothing to wait', async () => {
@@ -34,7 +34,7 @@ describe('Mode(hidden):', () => {
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
 
-    await (ins.$children[0] as SSVue).promiser
+    await (ins.$children[0] as Vue).promiser
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
   })
@@ -59,7 +59,7 @@ describe('Mode(hidden):', () => {
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
 
-    await (ins.$children[0] as SSVue).promiser
+    await (ins.$children[0] as Vue).promiser
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
   })
@@ -86,7 +86,7 @@ describe('Mode(hidden):', () => {
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
 
-    await (ins.$children[0] as SSVue).promiser
+    await (ins.$children[0] as Vue).promiser
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
   })
@@ -113,7 +113,7 @@ describe('Mode(hidden):', () => {
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
 
-    await (ins.$children[0] as SSVue).promiser
+    await (ins.$children[0] as Vue).promiser
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
   })
@@ -133,8 +133,8 @@ describe('Mode(hidden):', () => {
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
 
-    await (ins.$children[0] as SSVue).promiser
-    await (ins.$children[0].$children[0] as SSVue).promiser
+    await (ins.$children[0] as Vue).promiser
+    await (ins.$children[0].$children[0] as Vue).promiser
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
   })
@@ -161,8 +161,8 @@ describe('Mode(hidden):', () => {
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
 
-    await (ins.$children[0] as SSVue).promiser
-    await (ins.$children[0].$children[1] as SSVue).promiser
+    await (ins.$children[0] as Vue).promiser
+    await (ins.$children[0].$children[1] as Vue).promiser
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
   })
@@ -189,9 +189,9 @@ describe('Mode(hidden):', () => {
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
 
-    await (ins.$children[0] as SSVue).promiser
-    await (ins.$children[0].$children[1] as SSVue).promiser
-    await (ins.$children[0].$children[1].$children[0] as SSVue).promiser
+    await (ins.$children[0] as Vue).promiser
+    await (ins.$children[0].$children[1] as Vue).promiser
+    await (ins.$children[0].$children[1].$children[0] as Vue).promiser
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
   })

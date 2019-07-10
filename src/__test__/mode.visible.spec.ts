@@ -6,7 +6,7 @@ import CacheComponent1 from './__fixtures__/CacheComponent'
 import CacheComponent2 from './__fixtures__/CacheComponent2'
 import CacheComponent3 from './__fixtures__/CacheComponent3'
 import { dynamicImport } from './__fixtures__/fetch'
-import Suspense, { SSVue } from '../Suspense'
+import Suspense from '../Suspense'
 
 Vue.config.devtools = false
 Vue.config.productionTip = false
@@ -29,7 +29,7 @@ describe('Mode(visible):', () => {
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
 
-    await (ins.$children[0] as SSVue).promiser
+    await (ins.$children[0] as Vue).promiser
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
   })
@@ -54,7 +54,7 @@ describe('Mode(visible):', () => {
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
 
-    await (ins.$children[0] as SSVue).promiser
+    await (ins.$children[0] as Vue).promiser
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
   })
@@ -74,8 +74,8 @@ describe('Mode(visible):', () => {
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
 
-    await (ins.$children[0] as SSVue).promiser
-    await (ins.$children[0].$children[0] as SSVue).promiser
+    await (ins.$children[0] as Vue).promiser
+    await (ins.$children[0].$children[0] as Vue).promiser
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
   })
@@ -102,8 +102,8 @@ describe('Mode(visible):', () => {
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
 
-    await (ins.$children[0] as SSVue).promiser
-    await (ins.$children[0].$children[1] as SSVue).promiser
+    await (ins.$children[0] as Vue).promiser
+    await (ins.$children[0].$children[1] as Vue).promiser
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
   })
@@ -130,9 +130,9 @@ describe('Mode(visible):', () => {
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
 
-    await (ins.$children[0] as SSVue).promiser
-    await (ins.$children[0].$children[1] as SSVue).promiser
-    await (ins.$children[0].$children[1].$children[0] as SSVue).promiser
+    await (ins.$children[0] as Vue).promiser
+    await (ins.$children[0].$children[1] as Vue).promiser
+    await (ins.$children[0].$children[1].$children[0] as Vue).promiser
 
     expect(ins.$el.outerHTML).toMatchSnapshot()
   })

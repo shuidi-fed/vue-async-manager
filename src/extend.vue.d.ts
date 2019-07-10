@@ -1,4 +1,5 @@
 import { VNode } from 'vue'
+import { SSOptions } from './index'
 import { SSAsyncFactory, SSComponent } from './Suspense'
 
 declare module 'vue/types/vue' {
@@ -14,5 +15,8 @@ declare module 'vue/types/vue' {
     setupLoading(): void
     _self: Vue
     [key: string]: any
+  }
+  interface VueConstructor {
+    setSuspenseOptions(options: SSOptions): void
   }
 }
