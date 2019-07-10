@@ -2,6 +2,7 @@ import Vue from 'vue'
 import installer from '../index'
 import ResourceManager from './__fixtures__/ResourceManager'
 import ResourceManager2 from './__fixtures__/ResourceManager2'
+import ResourceManagerError from './__fixtures__/ResourceManagerError'
 import Suspense from '../Suspense'
 
 Vue.config.devtools = false
@@ -84,5 +85,30 @@ describe('Resource Manager:', () => {
     expect(rmIns.$rm2.$result).toEqual({ name: 'bar' })
     expect(rmIns.$rm.$loading).toBe(false)
     expect(rmIns.$rm2.$loading).toBe(false)
+  })
+
+  test('Resource manager - Error handling', async () => {
+    const ins = new Vue({
+      components: { ResourceManagerError },
+      render(h) {
+        return h('ResourceManagerError')
+      }
+    })
+
+    ins.$mount()
+
+    const rmIns = ins.$children[0] as any
+
+    expect(rmIns.$rm.$loading).toBe(true)
+    expect(rmIns.$rm.$result).toBe(null)
+    expect(rmIns.$rm.$error).toBe(null)
+
+    try {
+      await rmIns.promiser
+    } catch (err) {
+      expect(rmIns.$rm.$loading).toBe(false)
+      expect(rmIns.$rm.$result).toBe(null)
+      expect(rmIns.$rm.$error).toBe('request error')
+    }
   })
 })

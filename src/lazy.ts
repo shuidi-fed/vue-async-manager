@@ -25,22 +25,27 @@ export default function lazy<PropsDef = PropsDefinition<DefaultProps>>(
       asyncFactory.suspenseInstance = currentSuspenseInstance as SSVue
       asyncFactory.$$waiter = promise
 
-      promise.then(C => {
-        // Compatible ES Module
-        if (C.__esModule && C.default) {
-          C = C.default
-        }
-        asyncFactory.resolved = C
-        // Trigger update
-        this.$forceUpdate()
-      })
+      promise
+        .then(C => {
+          // Compatible ES Module
+          if (C.__esModule && C.default) {
+            C = C.default
+          }
+          asyncFactory.resolved = C
+          // Trigger update
+          this.$forceUpdate()
+        })
+        .catch(err => {
+          if (process.env.NODE_ENV !== 'production') {
+            console.error(err)
+          }
+          del(asyncFactory, err)
+        })
     },
     updated() {
       del(asyncFactory)
     },
     render(this: SSVue, h) {
-      console.log('SSLazy render')
-
       // Fix context
       const slots = Object.keys(this.$slots)
         .reduce(

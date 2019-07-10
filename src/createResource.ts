@@ -23,24 +23,30 @@ function observable(data: any) {
   }).$data
 }
 
-interface Result<R> {
+interface Result<R, E> {
   $$result: R
+  $$error: E
   $$loading: boolean
 }
-interface ResourceManager<I, R> {
+interface ResourceManager<I, R, E> {
   read(input: I): Promise<R>
   $result: R
+  $error: E
   $loading: boolean
-  fork(): ResourceManager<I, R>
+  fork(): ResourceManager<I, R, E>
 }
 interface ResourceOptions {
   prevent?: boolean
 }
-export default function createResource<I = any, R = any>(
+export default function createResource<I = any, R = any, E = any>(
   fetchFactory: SSAsyncFactory<I, R>,
   options?: ResourceOptions
-): ResourceManager<I, R> {
-  const $res: Result<R> = observable({ $$result: null, $$loading: false })
+): ResourceManager<I, R, E> {
+  const $res: Result<R, E> = observable({
+    $$result: null,
+    $$error: null,
+    $$loading: false
+  })
 
   const ins = currentInstance as SSVue
   if (currentSuspenseInstance) {
@@ -59,7 +65,7 @@ export default function createResource<I = any, R = any>(
 
   const hasSuspenseInstance = !!fetchFactory.suspenseInstance
 
-  const resourceManager: ResourceManager<I, R> = {
+  const resourceManager: ResourceManager<I, R, E> = {
     read(input: I) {
       if ($res.$$loading && options && options.prevent) {
         return Promise.resolve({} as R)
@@ -80,13 +86,21 @@ export default function createResource<I = any, R = any>(
       // Start fetching asynchronous data
       const promise = uniqueWrapFactory(input)
 
-      promise.then(res => {
-        fetchFactory.resolved = true
-        // Trigger update
-        $res.$$result = res
-        $res.$$loading = false
-        if (hasSuspenseInstance) del(uniqueWrapFactory)
-      })
+      promise
+        .then(res => {
+          // Trigger update
+          $res.$$result = res
+          $res.$$loading = false
+          if (hasSuspenseInstance) del(uniqueWrapFactory)
+        })
+        .catch((err: E) => {
+          if (process.env.NODE_ENV !== 'production') {
+            console.error(err)
+          }
+          $res.$$error = err
+          $res.$$loading = false
+          if (hasSuspenseInstance) del(uniqueWrapFactory, err)
+        })
 
       return promise
     },
@@ -95,6 +109,12 @@ export default function createResource<I = any, R = any>(
     },
     set $result(val: R) {
       $res.$$result = val
+    },
+    get $error(): E {
+      return $res.$$error
+    },
+    set $error(val: E) {
+      $res.$$error = val
     },
     get $loading(): boolean {
       return $res.$$loading

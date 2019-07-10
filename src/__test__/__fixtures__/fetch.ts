@@ -1,23 +1,28 @@
 import { Component } from 'vue'
 
-export default (mockData: any) => {
-  return new Promise(resolve => {
+export default (mockData?: any, throwError?: any) => {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(
-        mockData || {
-          code: 0,
-          msg: 'success',
-          data: {}
-        }
-      )
+      !throwError
+        ? resolve(
+            mockData || {
+              code: 0,
+              msg: 'success',
+              data: {}
+            }
+          )
+        : reject('request error')
     }, 1000)
   })
 }
 
-export function dynamicImport(Comp: Component): Promise<Component> {
-  return new Promise(resolve => {
+export function dynamicImport(
+  Comp: Component,
+  throwError: boolean = false
+): Promise<Component> {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(Comp)
+      throwError ? reject('load error') : resolve(Comp)
     }, 1000)
   })
 }

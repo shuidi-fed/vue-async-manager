@@ -31,14 +31,21 @@ export interface SSVue<R = any> extends Vue {
 }
 
 export const RESOLVED = 'resolved'
-export const del = (af: SSAsyncFactory) => {
+export const REJECTED = 'rejected'
+export const del = (af: SSAsyncFactory, error?: any) => {
   const suspIns = af.suspenseInstance
   if (!suspIns) {
-    // TODO: warn
-    console.error('No Suspense instance')
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('No Suspense instance')
+    }
     return
   }
   const asyncFactorys = suspIns.asyncFactorys
+
+  if (error) {
+    suspIns.$emit(REJECTED, error)
+    return
+  }
 
   asyncFactorys.delete(af)
   if (asyncFactorys.size === 0) {
@@ -48,13 +55,14 @@ export const del = (af: SSAsyncFactory) => {
 export const add = (af: SSAsyncFactory) => {
   const suspIns = currentSuspenseInstance || af.suspenseInstance
   if (!suspIns) {
-    // TODO: warn
-    console.error('No Suspense instance')
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('No Suspense instance')
+    }
     return
   }
   const asyncFactorys =
     suspIns.asyncFactorys || (suspIns.asyncFactorys = new Set())
-  console.log('suspIns_ID: ', suspIns._uid)
+
   if (suspIns.resolved) {
     suspIns.resolved = false
     suspIns.setupLoading()
@@ -64,8 +72,9 @@ export const add = (af: SSAsyncFactory) => {
 export const has = (af: SSAsyncFactory) => {
   const suspIns = currentSuspenseInstance || af.suspenseInstance
   if (!suspIns) {
-    // TODO: warn
-    console.error('No Suspense instance')
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('No Suspense instance')
+    }
     return
   }
   return suspIns.asyncFactorys && suspIns.asyncFactorys.has(af)
@@ -96,20 +105,29 @@ export default {
       } else {
         this.displayLoading = true
       }
+    },
+    destroyLoading() {
+      if (this._timer) {
+        clearTimeout(this._timer)
+        this._timer = null
+      }
+      this.displayLoading = false
     }
   },
   created() {
     pushSuspenseInstance(this)
     // `this.promiser` is for test cases
-    this.promiser = new Promise(resolve => {
+    this.promiser = new Promise((resolve, reject) => {
       this.$on(RESOLVED, () => {
-        if (this._timer) {
-          clearTimeout(this._timer)
-          this._timer = null
-        }
+        this.destroyLoading()
         this.resolved = true
-        this.displayLoading = false
         resolve()
+      })
+
+      this.$on(REJECTED, (err: Error) => {
+        this.destroyLoading()
+        this.rejected = true
+        reject(err)
       })
     })
 
@@ -134,9 +152,6 @@ export default {
     popSuspenseInstance()
   },
   render(this: SSVue, h: CreateElement) {
-    console.log(this._uid)
-    console.log(this.resolved)
-    console.log('Suspense render')
     const isVisible =
       ((this.$options as any).suspense as SSOptions).mode === 'visible'
     const emptyVNode = this._e()
@@ -146,34 +161,39 @@ export default {
     // The `tree` is the real content to be rendered
     const tree = this.$slots.default || [emptyVNode]
 
-    const rendered = this.resolved
-      ? isVisible
-        ? createWrapper(h, tree)
+    let rendered
+    if (this.rejected && this.$slots.error) {
+      rendered = createWrapper(h, this.$slots.error)
+    } else {
+      rendered = this.resolved
+        ? isVisible
+          ? createWrapper(h, tree)
+          : createWrapper(h, [
+              // We need to render the tree, but we should not show the rendered content.
+              h(
+                'div',
+                {
+                  style: { display: 'block' },
+                  class: { 'vue-suspense-hidden-wrapper': true }
+                },
+                tree
+              )
+            ])
+        : isVisible
+        ? createWrapper(h, tree.concat(fallback))
         : createWrapper(h, [
             // We need to render the tree, but we should not show the rendered content.
             h(
               'div',
               {
-                style: { display: 'block' },
+                style: { display: 'none' },
                 class: { 'vue-suspense-hidden-wrapper': true }
               },
               tree
-            )
+            ),
+            fallback
           ])
-      : isVisible
-      ? createWrapper(h, tree.concat(fallback))
-      : createWrapper(h, [
-          // We need to render the tree, but we should not show the rendered content.
-          h(
-            'div',
-            {
-              style: { display: 'none' },
-              class: { 'vue-suspense-hidden-wrapper': true }
-            },
-            tree
-          ),
-          fallback
-        ])
+    }
 
     return rendered
   }

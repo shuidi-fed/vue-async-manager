@@ -10,7 +10,6 @@ export default {
     this.promiser = this.$rm.read()
   },
   render(h: CreateElement) {
-    console.log('CacheComponent render')
     return h(
       'div',
       { class: { 'cache-component-3': true } },

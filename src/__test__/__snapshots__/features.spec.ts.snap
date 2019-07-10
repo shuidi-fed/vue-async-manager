@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Lazy Error:  Lazy component failed to load 1`] = `"<div class=\\"vue-suspense-wrapper\\"><!----><p>static</p><div class=\\"fallback\\">loading</div></div>"`;
+
+exports[`Lazy Error:  Lazy component failed to load 2`] = `"<div class=\\"vue-suspense-wrapper\\"><div class=\\"error\\">error</div></div>"`;
