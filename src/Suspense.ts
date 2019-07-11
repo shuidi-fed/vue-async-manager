@@ -156,27 +156,13 @@ export default {
           ? createWrapper(h, tree)
           : createWrapper(h, [
               // We need to render the tree, but we should not show the rendered content.
-              h(
-                'div',
-                {
-                  style: { display: 'block' },
-                  class: { 'vue-suspense-hidden-wrapper': true }
-                },
-                tree
-              )
+              createHiddenWrapper(h, tree, true)
             ])
         : isVisible
         ? createWrapper(h, tree.concat(fallback))
         : createWrapper(h, [
             // We need to render the tree, but we should not show the rendered content.
-            h(
-              'div',
-              {
-                style: { display: 'none' },
-                class: { 'vue-suspense-hidden-wrapper': true }
-              },
-              tree
-            ),
+            createHiddenWrapper(h, tree, false),
             fallback
           ])
     }
@@ -192,5 +178,20 @@ function createWrapper(h: CreateElement, children: VNodeChildren): VNode {
       class: { 'vue-suspense-wrapper': true }
     },
     children
+  )
+}
+
+function createHiddenWrapper(
+  h: CreateElement,
+  tree: VNodeChildren,
+  display: boolean
+): VNode {
+  return h(
+    'div',
+    {
+      style: { display: display ? 'block' : 'none' },
+      class: { 'vue-suspense-hidden-wrapper': true }
+    },
+    tree
   )
 }

@@ -21,6 +21,11 @@ module.exports = {
         label: 'English',
         sidebar: [
           '/'
+        ],
+        nav: [
+          { text: 'Guide', link: '/guide' },
+          { text: 'API', link: '/api' },
+          { text: 'Live demo', link: '/demo' }
         ]
       },
       '/zh/': {
@@ -28,6 +33,11 @@ module.exports = {
         editLinkText: '在 GitHub 上编辑此页',
         sidebar: [
           ['/zh/guide', '指南']
+        ],
+        nav: [
+          { text: '指南', link: '/zh/guide' },
+          { text: 'API', link: '/zh/api' },
+          { text: '在线演示', link: '/zh/demo' }
         ]
       }
     },
