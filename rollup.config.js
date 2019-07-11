@@ -28,6 +28,15 @@ export default {
     {
       file: `dist/index.esm.${suffix}.js`,
       format: 'esm'
+    },
+    {
+      file: `dist/index.umd.${suffix}.js`,
+      format: 'umd',
+      name: 'Suspense',
+      exports: 'named',
+      globals: {
+        vue: 'Vue'
+      }
     }
   ],
   onwarn(warning, warn) {
