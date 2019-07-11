@@ -29,14 +29,14 @@ interface Result<R, E> {
   $$error: E
   $$loading: boolean
 }
-interface ResourceManager<I, R, E> {
+export interface ResourceManager<I, R, E> {
   read(input: I): Promise<R>
   $result: R
   $error: E
   $loading: boolean
   fork(): ResourceManager<I, R, E>
 }
-interface ResourceOptions {
+export interface ResourceOptions {
   prevent?: boolean
 }
 export default function createResource<I = any, R = any, E = any>(
@@ -68,7 +68,7 @@ export default function createResource<I = any, R = any, E = any>(
 
   const resourceManager: ResourceManager<I, R, E> = {
     read(input: I) {
-      if ($res.$$loading && options && options.prevent) {
+      if (options && options.prevent && $res.$$loading) {
         return $res.$$promiser
       }
       $res.$$loading = true

@@ -33,5 +33,10 @@ if (window && (window as any).Vue) {
 }
 
 export { Suspense }
+export { SSAsyncFactory } from './Suspense'
 export { default as lazy } from './lazy'
-export { default as createResource } from './createResource'
+export {
+  default as createResource,
+  ResourceManager,
+  ResourceOptions
+} from './createResource'
