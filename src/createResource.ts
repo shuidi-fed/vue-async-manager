@@ -24,6 +24,7 @@ function observable(data: any) {
 }
 
 interface Result<R, E> {
+  $$promiser: Promise<R>
   $$result: R
   $$error: E
   $$loading: boolean
@@ -68,7 +69,7 @@ export default function createResource<I = any, R = any, E = any>(
   const resourceManager: ResourceManager<I, R, E> = {
     read(input: I) {
       if ($res.$$loading && options && options.prevent) {
-        return Promise.resolve({} as R)
+        return $res.$$promiser
       }
       $res.$$loading = true
       // Because we don't need caching, this is just a unique identifier,
@@ -84,7 +85,7 @@ export default function createResource<I = any, R = any, E = any>(
       }
 
       // Start fetching asynchronous data
-      const promise = uniqueWrapFactory(input)
+      const promise = ($res.$$promiser = uniqueWrapFactory(input))
 
       promise
         .then(res => {
