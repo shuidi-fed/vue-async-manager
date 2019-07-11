@@ -4,12 +4,12 @@ module.exports = {
   locales: {
     '/': {
       lang: 'en-US',
-      title: 'vue-suspense',
+      title: 'vue-async-manager',
       description: 'Manage asynchronous calls more easily in Vue apps'
     },
     '/zh/': {
       lang: 'zh-CN',
-      title: 'vue-suspense',
+      title: 'vue-async-manager',
       description: '在 Vue 应用中更轻松的管理异步调用'
     }
   },
@@ -41,7 +41,7 @@ module.exports = {
         ]
       }
     },
-    repo: 'shuidi-fed/vue-suspense',
+    repo: 'shuidi-fed/vue-async-manager',
     docsDir: 'docs',
     editLinks: true,
     sidebar: 'auto'

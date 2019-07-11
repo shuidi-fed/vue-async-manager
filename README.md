@@ -1,8 +1,8 @@
-# vue-suspense (WIP)
+# vue-async-manager (WIP)
 
-<a href="https://circleci.com/gh/shuidi-fed/vue-suspense/tree/master"><img src="https://img.shields.io/circleci/build/github/shuidi-fed/vue-suspense/master.svg" alt="build status"/></a>
+<a href="https://circleci.com/gh/shuidi-fed/vue-async-manager/tree/master"><img src="https://img.shields.io/circleci/build/github/shuidi-fed/vue-async-manager/master.svg" alt="build status"/></a>
 
-Code splitting, data fetching, just like React.Suspense, but for vue.
+Manage asynchronous calls more easily in Vue apps.
 
 ## TODO
 

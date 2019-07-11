@@ -1,18 +1,19 @@
 {
-  "name": "vue-suspense",
+  "name": "vue-resource-manager",
   "version": "0.1.0",
-  "description": "Code splitting, data acquisition, just like React.suspense, just for vue.",
+  "description": "Manage asynchronous calls more easily in Vue apps.",
   "keywords": [
     "vue",
     "suspense",
     "suspend",
-    "async"
+    "async",
+    "resource"
   ],
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "unpkg": "dist/index.umd.prod.js",
   "jsdelivr": "dist/index.umd.prod.js",
-  "repository": "https://github.com/shuidi-fed/vue-suspense.git",
+  "repository": "https://github.com/shuidi-fed/vue-async-manager.git",
   "author": "HcySunYang <HcySunYang@outlook.com>",
   "license": "MIT",
   "scripts": {

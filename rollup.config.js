@@ -32,7 +32,7 @@ export default {
     {
       file: `dist/index.umd.${suffix}.js`,
       format: 'umd',
-      name: 'Suspense',
+      name: 'AsyncManager',
       exports: 'named',
       globals: {
         vue: 'Vue'
