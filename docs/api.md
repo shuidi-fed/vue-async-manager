@@ -1,15 +1,15 @@
 # API
 
-## 插件选项
+## Plugin options
 
 ### mode
 
-指定渲染模式，可选值为 `'visible'` 和 `'hidden'`。
+Specify the rendering mode, the optional values are `'visible'` and `'hidden'`.
 
 - Type: `string`
 - Default: `'visible'`
 
-例：
+example:
 
 ```js
 import VueAsyncManager from 'vue-async-manager'
@@ -19,32 +19,32 @@ Vue.use(VueAsyncManager, {
 })
 ```
 
-## `<Suspense>` 组件
+## `<Suspense>` component
 
 ### Props
 
 | Name         | Description   | Type         | Default  |
 | ------------ | ------------- | ------------ | ------------- |
-| delay | `fallback` 内容的延迟展示的毫秒数 | `Number` | `0` |
+| delay | The number of milliseconds of delayed display of `fallback` content | `Number` | `0` |
 
 ### Slots
 
 | Name         | Description   |
 | ------------ | ------------- |
-| fallback | 当异步调用为完成之前要展示的内容 |
-| error | 当异步调用发生错误时展示的内容 |
-| default | 真正要渲染的内容 |
+| fallback | What to show in the loading |
+| error | What will be shown when an error occurs in an async call |
+| default | What you really want to render |
 
 ### Events
 
 | Name         | Description   |
 | ------------ | ------------- |
-| resolved | 当所有异步调用成功后触发 |
-| rejected | 当某个异步调用发生错误时触发 |
+| resolved | Triggered when all async calls succeed |
+| rejected | Triggered when an async call has an error |
 
-### Suspense 组件的容器元素
+### Container element of the Suspense component
 
-`Vue2` 的有状态组件中不能有多个根元素，为了降低复杂度，内部使用一个 `div` 作为容器包裹层，假设我们有如下代码：
+There can be at most one root element in a stateful component. To reduce the complexity, we internally use a `div` as the container wrapper, assuming we have the following code:
 
 ```html
 <Suspense>
@@ -53,7 +53,7 @@ Vue.use(VueAsyncManager, {
 </Suspense>
 ```
 
-如果是在 `visible` 模式下，渲染出来的内容为：
+If it is in the `visible` mode, the rendered content is:
 
 ```html
 <div class="vue-suspense-wrapper">
@@ -62,7 +62,7 @@ Vue.use(VueAsyncManager, {
 </div>
 ```
 
-如果是在 `hidden` 模式下，渲染出来的内容为：
+If it is in `hidden` mode, the rendered content is:
 
 ```html
 
@@ -74,7 +74,7 @@ Vue.use(VueAsyncManager, {
 </div>
 ```
 
-可以通过为 `<Suspense>` 组件提供 `class` prop，从而为根元素添加额外的 `class`：
+You can add extra `class` to the root element by supplying `class` prop for the `<Suspense>` component:
 
 ```html
 <Suspense class="custom-class">
@@ -83,7 +83,7 @@ Vue.use(VueAsyncManager, {
 </Suspense>
 ```
 
-渲染的内容为：
+The rendered content is:
 
 ```html {1}
 <div class="custom-class vue-suspense-wrapper">
@@ -92,11 +92,11 @@ Vue.use(VueAsyncManager, {
 </div>
 ```
 
-这是 `vue2` 的行为。
+This is the behavior of `vue2`.
 
 ## Vue.setSuspenseOptions(options)
 
-设置 Suspense 插件选项，例如：
+Set the Suspense plugin options, for example:
 
 ```js
 Vue.setSuspenseOptions({ mode: 'hidden' })

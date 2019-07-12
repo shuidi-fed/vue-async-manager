@@ -20,7 +20,9 @@ module.exports = {
       '/': {
         label: 'English',
         sidebar: [
-          '/'
+          ['/guide', 'Guide'],
+          ['/demo', 'Live demo'],
+          ['/api', 'API']
         ],
         nav: [
           { text: 'Guide', link: '/guide' },
@@ -32,7 +34,9 @@ module.exports = {
         label: '简体中文',
         editLinkText: '在 GitHub 上编辑此页',
         sidebar: [
-          ['/zh/guide', '指南']
+          ['/zh/guide', '指南'],
+          ['/zh/demo', '在线演示'],
+          ['/zh/api', 'API']
         ],
         nav: [
           { text: '指南', link: '/zh/guide' },
