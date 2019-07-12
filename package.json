@@ -1,5 +1,5 @@
 {
-  "name": "vue-resource-manager",
+  "name": "vue-async-manager",
   "version": "0.1.0",
   "description": "Manage asynchronous calls more easily in Vue apps.",
   "keywords": [
