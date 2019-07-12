@@ -18,7 +18,7 @@ If you are familiar with `React Suspense`, then `vue-async-manager` provides an 
 
 In addition, `vue-async-manager` also provides a **resource manager** to help you manage asynchronous API requests more easily.
 
-Next you can check out the [Guide](/guide.html) to get started quickly, or check out [API](/api.html). At the same time, we provide a number of [Live Demos](/zh/demo.html) to help you understand `vue-async-manager`.
+Next you can check out the [Guide](https://shuidi-fed.github.io/vue-async-manager/guide.html) to get started quickly, or check out [API](https://shuidi-fed.github.io/vue-async-manager/api.html). At the same time, we provide a number of [Live Demos](https://shuidi-fed.github.io/vue-async-manager/demo.html) to help you understand `vue-async-manager`.
 
 ## Installation
 
@@ -41,7 +41,7 @@ import VueAsyncManager from "vue-async-manager"
 Vue.use(VueAsyncManager, options)
 ```
 
-- [Click to view more live demos](/demo.html)
-- [Click to view more live demos](/demo.html)
-- [Click to view more live demos](/demo.html)
+- [Click to view more live demos](https://shuidi-fed.github.io/vue-async-manager/demo.html)
+- [Click to view more live demos](https://shuidi-fed.github.io/vue-async-manager/demo.html)
+- [Click to view more live demos](https://shuidi-fed.github.io/vue-async-manager/demo.html)
 

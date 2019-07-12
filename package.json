@@ -27,7 +27,8 @@
     "changelog": "conventional-changelog -i CHANGELOG.md -s",
     "prepublishOnly": "yarn build",
     "docs:dev": "vuepress dev ./docs",
-    "docs:build": "vuepress build ./docs"
+    "docs:build": "vuepress build ./docs",
+    "docs:deploy": "./scripts/deploy.sh"
   },
   "files": [
     "dist"

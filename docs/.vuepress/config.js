@@ -1,6 +1,7 @@
 const { resolve } = require('path')
 
 module.exports = {
+  base: '/vue-async-manager/',
   locales: {
     '/': {
       lang: 'en-US',
