@@ -228,7 +228,7 @@ export default {
 Live Demo: [Use with vuex](/demo.html#use-with-vuex)
 :::
 
-## Capture all asynch calls in the component tree
+## Capture all async calls in the component tree
 
 The `<Suspense>` component not only captures the loading of async components. If an async component itself has other async calls, such as reading data through the **Resource Manager**, the `<Suspense>` component can also capture these async calls and wait for all async calls to end before hiding `loading` .
 
