@@ -1,10 +1,11 @@
 import Vue from 'vue'
-import { del, add, SSAsyncFactory, COMPONENT_NAME } from './Suspense'
+import { del, add, SSAsyncFactory } from './Suspense'
 import {
   currentInstance,
   currentSuspenseInstance,
   setCurrentInstance
 } from './currentInstance'
+import findSuspenseInstance from './findSuspenseInstance'
 
 Vue.mixin({
   created(this: Vue) {
@@ -50,19 +51,9 @@ export default function createResource<I = any, R = any, E = any>(
   })
 
   const ins = currentInstance as Vue
-  if (currentSuspenseInstance) {
-    fetchFactory.suspenseInstance = currentSuspenseInstance
-  } else {
-    let current = ins.$parent
-    while (current) {
-      if (current.$options.name === COMPONENT_NAME) {
-        fetchFactory.suspenseInstance = current as Vue
-        break
-      } else {
-        current = current.$parent
-      }
-    }
-  }
+  fetchFactory.suspenseInstance = currentSuspenseInstance
+    ? currentSuspenseInstance
+    : findSuspenseInstance(ins)
 
   const hasSuspenseInstance = !!fetchFactory.suspenseInstance
 

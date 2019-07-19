@@ -1,7 +1,8 @@
 import Vue, { Component, VNode } from 'vue'
+import { PropsDefinition, DefaultProps } from 'vue/types/options'
 import { del, add, has, SSAsyncFactory, SSComponent } from './Suspense'
 import { currentSuspenseInstance } from './currentInstance'
-import { PropsDefinition, DefaultProps } from 'vue/types/options'
+import findSuspenseInstance from './findSuspenseInstance'
 
 export default function lazy<PropsDef = PropsDefinition<DefaultProps>>(
   asyncFactory: SSAsyncFactory,
@@ -11,6 +12,9 @@ export default function lazy<PropsDef = PropsDefinition<DefaultProps>>(
     name: 'SSLazy',
     props: props || [],
     created() {
+      asyncFactory.suspenseInstance =
+        (currentSuspenseInstance as Vue) || findSuspenseInstance(this)
+
       if (has(asyncFactory)) return
 
       add(asyncFactory)
@@ -22,7 +26,6 @@ export default function lazy<PropsDef = PropsDefinition<DefaultProps>>(
         return
       }
       const promise = asyncFactory()
-      asyncFactory.suspenseInstance = currentSuspenseInstance as Vue
       asyncFactory.$$waiter = promise
 
       promise
