@@ -45,3 +45,9 @@ Vue.use(VueAsyncManager, options)
 - [Click to view more live demos](https://shuidi-fed.github.io/vue-async-manager/demo.html)
 - [Click to view more live demos](https://shuidi-fed.github.io/vue-async-manager/demo.html)
 
+## Author
+
+**vue-async-manager** © [HcySunYang](https://github.com/HcySunYang), Released under the [MIT](./LICENSE) License.<br>
+Authored and maintained by HcySunYang.
+
+> [homepage](http://hcysun.me/homepage/) · GitHub [@HcySunYang](https://github.com/HcySunYang) · Twitter [@HcySunYang](https://twitter.com/HcySunYang)
