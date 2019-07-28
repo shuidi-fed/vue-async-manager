@@ -1,8 +1,8 @@
 # vue-async-manager
 
-<a href="https://circleci.com/gh/shuidi-fed/vue-async-manager/tree/master"><img src="https://img.shields.io/circleci/build/github/shuidi-fed/vue-async-manager/master.svg" alt="build status"/></a>
+<a href="https://circleci.com/gh/vue-contrib/vue-async-manager/tree/master"><img src="https://img.shields.io/circleci/build/github/vue-contrib/vue-async-manager/master.svg" alt="build status"/></a>
 [![](https://img.shields.io/npm/v/vue-async-manager.svg)](https://www.npmjs.com/package/vue-async-manager)
-<a href="https://github.com/shuidi-fed/vue-async-manager"><img src="https://img.shields.io/github/license/shuidi-fed/vue-async-manager.svg" alt="License"/></a>
+<a href="https://github.com/vue-contrib/vue-async-manager"><img src="https://img.shields.io/github/license/vue-contrib/vue-async-manager.svg" alt="License"/></a>
 <a href="http://commitizen.github.io/cz-cli/"><img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" alt="Commitizen friendly"/></a>
 
 Manage asynchronous calls more easily in Vue apps.
@@ -18,7 +18,7 @@ If you are familiar with `React Suspense`, then `vue-async-manager` provides an 
 
 In addition, `vue-async-manager` also provides a **resource manager** to help you manage asynchronous API requests more easily.
 
-Next you can check out the [Guide](https://shuidi-fed.github.io/vue-async-manager/guide.html) to get started quickly, or check out [API](https://shuidi-fed.github.io/vue-async-manager/api.html). At the same time, we provide a number of [Live Demos](https://shuidi-fed.github.io/vue-async-manager/demo.html) to help you understand `vue-async-manager`.
+Next you can check out the [Guide](https://vue-contrib.github.io/vue-async-manager/guide.html) to get started quickly, or check out [API](https://vue-contrib.github.io/vue-async-manager/api.html). At the same time, we provide a number of [Live Demos](https://vue-contrib.github.io/vue-async-manager/demo.html) to help you understand `vue-async-manager`.
 
 ## Installation
 
@@ -41,9 +41,9 @@ import VueAsyncManager from "vue-async-manager"
 Vue.use(VueAsyncManager, options)
 ```
 
-- [Click to view more live demos](https://shuidi-fed.github.io/vue-async-manager/demo.html)
-- [Click to view more live demos](https://shuidi-fed.github.io/vue-async-manager/demo.html)
-- [Click to view more live demos](https://shuidi-fed.github.io/vue-async-manager/demo.html)
+- [Click to view more live demos](https://vue-contrib.github.io/vue-async-manager/demo.html)
+- [Click to view more live demos](https://vue-contrib.github.io/vue-async-manager/demo.html)
+- [Click to view more live demos](https://vue-contrib.github.io/vue-async-manager/demo.html)
 
 ## Author
 
