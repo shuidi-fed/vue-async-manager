@@ -46,7 +46,7 @@ module.exports = {
         ]
       }
     },
-    repo: 'shuidi-fed/vue-async-manager',
+    repo: 'vue-contrib/vue-async-manager',
     docsDir: 'docs',
     editLinks: true,
     sidebar: 'auto'

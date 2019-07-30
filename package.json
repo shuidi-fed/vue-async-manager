@@ -13,7 +13,7 @@
   "module": "dist/index.esm.js",
   "unpkg": "dist/index.umd.prod.js",
   "jsdelivr": "dist/index.umd.prod.js",
-  "repository": "https://github.com/shuidi-fed/vue-async-manager.git",
+  "repository": "https://github.com/vue-contrib/vue-async-manager.git",
   "author": "HcySunYang <HcySunYang@outlook.com>",
   "license": "MIT",
   "scripts": {

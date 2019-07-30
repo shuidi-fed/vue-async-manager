@@ -1,8 +1,8 @@
 # Intro
 
-<a href="https://circleci.com/gh/shuidi-fed/vue-async-manager/tree/master"><img src="https://img.shields.io/circleci/build/github/shuidi-fed/vue-async-manager/master.svg" alt="build status"/></a>
+<a href="https://circleci.com/gh/vue-contrib/vue-async-manager/tree/master"><img src="https://img.shields.io/circleci/build/github/vue-contrib/vue-async-manager/master.svg" alt="build status"/></a>
 [![](https://img.shields.io/npm/v/vue-async-manager.svg)](https://www.npmjs.com/package/vue-async-manager)
-<a href="https://github.com/shuidi-fed/vue-async-manager"><img src="https://img.shields.io/github/license/shuidi-fed/vue-async-manager.svg" alt="License"/></a>
+<a href="https://github.com/vue-contrib/vue-async-manager"><img src="https://img.shields.io/github/license/vue-contrib/vue-async-manager.svg" alt="License"/></a>
 <a href="http://commitizen.github.io/cz-cli/"><img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" alt="Commitizen friendly"/></a>
 
 `vue-async-manager` can help you manage asynchronous calls more easily in `Vue` applications, including:

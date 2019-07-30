@@ -15,7 +15,7 @@ git config user.email 'HcySunYang@outlook.com'
 git add -A
 git commit -m 'deploy'
 
-git push -f git@github.com:shuidi-fed/vue-async-manager.git master:gh-pages
+git push -f git@github.com:vue-contrib/vue-async-manager.git master:gh-pages
 
 cd -
 
