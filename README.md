@@ -1,5 +1,7 @@
 # vue-async-manager
 
+**This project has been deprecated**
+
 <a href="https://circleci.com/gh/shuidi-fed/vue-async-manager/tree/master"><img src="https://img.shields.io/circleci/build/github/shuidi-fed/vue-async-manager/master.svg" alt="build status"/></a>
 [![](https://img.shields.io/npm/v/vue-async-manager.svg)](https://www.npmjs.com/package/vue-async-manager)
 <a href="https://github.com/shuidi-fed/vue-async-manager"><img src="https://img.shields.io/github/license/shuidi-fed/vue-async-manager.svg" alt="License"/></a>
